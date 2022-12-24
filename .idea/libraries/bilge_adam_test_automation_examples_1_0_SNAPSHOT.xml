@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bilge.adam.test.automation.examples-1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/bilge.adam.test.automation.examples-1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
