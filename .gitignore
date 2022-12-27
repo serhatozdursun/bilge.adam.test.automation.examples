@@ -1,3 +1,4 @@
 # Project exclude paths
 /target/
 .idea
+Java_and_Junit/target
