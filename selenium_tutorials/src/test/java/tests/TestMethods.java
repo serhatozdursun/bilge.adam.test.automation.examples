@@ -23,7 +23,7 @@ public class TestMethods {
         options.addArguments("--start-fullscreen");
         options.setCapability(CapabilityType.BROWSER_NAME,"chrome");
         driver = new ChromeDriver(options);
-        driver.get("https://learn.letskodeit.com/p/practice");
+        driver.get("https://courses.letskodeit.com/practice");
     }
 
 
