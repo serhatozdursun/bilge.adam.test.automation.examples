@@ -3,6 +3,7 @@ package tests;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,10 +13,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.swing.plaf.PanelUI;
 import java.time.Duration;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.openqa.selenium.WindowType.TAB;
+import static org.openqa.selenium.WindowType.WINDOW;
 
 
 public class TestMethods {
@@ -56,6 +60,7 @@ public class TestMethods {
         return getWait().until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+    //wait objesini kullanarak verilen locator a sahip tum elementleri bekler
     public List<WebElement> presentWaitForAll(By by) {
         return getWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
     }
@@ -92,6 +97,30 @@ public class TestMethods {
 
     public void clickElement(WebElement element) {
         clickAbleWait(element).click();
+    }
+
+    public Alert switchToAlert() {
+        return driver.switchTo().alert();
+    }
+
+    public void confirmTheAlert() {
+        switchToAlert().accept();
+    }
+
+    public void dismissTheAlert() {
+        switchToAlert().dismiss();
+    }
+
+    public String getAlertText() {
+        return switchToAlert().getText();
+    }
+
+    public void sendKeysToAlert(String text) {
+        switchToAlert().sendKeys(text);
+    }
+
+    public void sendKeysToWebElement(By by, String text) {
+        clickAbleWait(by).sendKeys(text);
     }
 
     @Test
@@ -182,8 +211,156 @@ public class TestMethods {
                 select.getFirstSelectedOption().getText());
     }
 
+    @Test
+    public void checkboxExamples() {
+        WebElement bmwcheck = presentWait(By.id("bmwcheck"));
+        clickElement(bmwcheck);
+        assertTrue(bmwcheck.isSelected());
+        clickElement(bmwcheck);
+        assertFalse(bmwcheck.isSelected());
+
+        var allCheckBoxes = presentWaitForAll(By.cssSelector("#checkbox-example-div input"));
+
+        for (WebElement checkBox : allCheckBoxes) {
+            clickElement(checkBox);
+            assertTrue(checkBox.isSelected());
+            clickElement(checkBox);
+            assertFalse(checkBox.isSelected());
+        }
+    }
+
+    @Test
+    public void switchWindow() throws InterruptedException {
+        clickElement(By.id("openwindow"));
+
+        // default window handler store edildi
+        var defaultWindowHandler = driver.getWindowHandle();
+
+        // en son acilan window switch
+        for (var handler : driver.getWindowHandles()) {
+            driver.switchTo().window(handler);
+        }
+        selectByValue(By.name("categories"), "1604");
+        invisibleWait(By.xpath("//h4[contains(text(),'Complete Test Automation Bundle')]"));
+
+        var titleH4 = presentWaitForAll(By.tagName("h4"));
+        assertEquals(1, titleH4.size());
+        assertEquals("Selenium WebDriver With Java", titleH4.get(0).getText());
+
+        // sonradan aclan window kapatildi
+        driver.close();
+        // default window'a geri donuldu
+        driver.switchTo().window(defaultWindowHandler);
+
+        var switchWindowTitle = presentWait(By.cssSelector("#open-window-example-div fieldset"));
+        var titleText = switchWindowTitle.getText();
+        assertEquals("Switch Window Example\nOpen Window", titleText);
 
 
+    }
+
+    // Yeni bir pencere acip islem yapmak icin
+    @Test
+    public void newWindow() {
+        var defaultWindowHandler = driver.getWindowHandle();
+        // yeni pencere acar
+        driver.switchTo().newWindow(WINDOW);
+        driver.get("https://www.hepsiburada.com/");
+        //todo yeni pencerede yapilacak islemler buraya
+        //acilan pencereyi kapatir
+        driver.close();
+        //eski pencrere geri doner
+        driver.switchTo().window(defaultWindowHandler);
+    }
+
+    @Test
+    public void newTab() throws InterruptedException {
+        var defaultWindowHandler = driver.getWindowHandle();
+        // yeni tab acar
+        driver.switchTo().newWindow(TAB);
+        driver.get("https://www.hepsiburada.com/");
+        //todo yeni tab da yapilacak islemler buraya
+        //acilan pencereyi kapatir
+        driver.close();
+        //eski pencrere geri doner
+        driver.switchTo().window(defaultWindowHandler);
+    }
+
+    @Test
+    public void switchAlert() throws InterruptedException {
+        clickElement(By.id("alertbtn"));
+        assertEquals("Hello , share this practice page and share your knowledge", getAlertText());
+        confirmTheAlert();
+    }
+
+    @Test
+    public void switchAlertAndDismiss() throws InterruptedException {
+        clickElement(By.id("confirmbtn"));
+        var alert = driver.switchTo().alert();
+        assertEquals("Hello , Are you sure you want to confirm?", alert.getText());
+        alert.dismiss();
+    }
+
+    @Test
+    public void switchAlertAndConfirm() throws InterruptedException {
+        clickElement(By.id("confirmbtn"));
+        var alert = driver.switchTo().alert();
+        assertEquals("Hello , Are you sure you want to confirm?", alert.getText());
+        alert.accept();
+    }
+
+    @Test
+    public void table() {
+        //xpath le data table yon.
+        var table = presentWait(By.id("product"));
+        int row = 3;
+        int cell = 2;
+        var element = table.findElement(By.xpath("((//tr)[" + row + "]/td)[" + cell + "]"));
+
+        log.info(element.getText());
+        //diger kullanimlar
+        var tds = presentWaitForAll(By.cssSelector("#product td"));
+        log.info(tds.get(4).getText());
+
+        var trs = presentWaitForAll(By.cssSelector("#product tr")).get(2);
+        log.info(trs.findElements(By.tagName("td")).get(1).getText());
+    }
+
+    @Test
+    public void sendKeys() throws InterruptedException {
+        clickAbleWait(By.id("name")).sendKeys("Serhat");
+        clickElement(By.id("confirmbtn"));
+        assertEquals("Hello Serhat, Are you sure you want to confirm?", getAlertText());
+        confirmTheAlert();
+    }
+
+    @Test
+    public void disableEnable() {
+        clickElement(By.id("disabled-button"));
+        assertFalse(presentWait(By.id("enabled-example-input")).isEnabled());
+        clickElement(By.id("enabled-button"));
+        assertTrue(presentWait(By.id("enabled-example-input")).isEnabled());
+
+       /* clickElement(By.id("disabled-button"));
+        sendKeysToWebElement(By.id("enabled-example-input"),"Test");*/
+    }
+
+
+    @Test
+    public void hideShow() {
+        clickElement(By.id("hide-textbox"));
+        invisibleWait(By.id("displayed-text"));
+        assertFalse(presentWait(By.id("displayed-text")).isDisplayed());
+
+        clickElement(By.id("show-textbox"));
+        visibleWait(By.id("displayed-text"));
+        assertTrue(presentWait(By.id("displayed-text")).isDisplayed());
+    }
+
+    @Test
+    void getRowText() {
+        log.info(presentWait(By.xpath("((//tr)[4]/td)[2]")).getText());
+    }
 
     @AfterEach
     public void afterEach() {
