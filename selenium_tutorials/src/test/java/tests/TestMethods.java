@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestMethods {
     private final static Logger log = LogManager.getLogger(TestMethods.class);
     private WebDriver driver;
-    private int WAIT_TIME = 15;
+    private int WAIT_TIME = 10;
 
     @BeforeAll
     public static void beforeAll() {
@@ -56,6 +56,10 @@ public class TestMethods {
         return getWait().until(ExpectedConditions.presenceOfElementLocated(by));
     }
 
+    public List<WebElement> presentWaitForAll(By by) {
+        return getWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
+    }
+
     //wait objesini kullanarak element sayfada gorunur olana kadar bekler
     public WebElement visibleWait(By by) {
         return getWait().until(ExpectedConditions.visibilityOfElementLocated(by));
@@ -80,6 +84,14 @@ public class TestMethods {
 
     public void selectByText(By by, String text) {
         getSelect(by).selectByVisibleText(text);
+    }
+
+    public void clickElement(By by) {
+        clickAbleWait(by).click();
+    }
+
+    public void clickElement(WebElement element) {
+        clickAbleWait(element).click();
     }
 
     @Test
@@ -155,7 +167,8 @@ public class TestMethods {
             log.info(option.getText());
     }
 
-    @Test void select(){
+    @Test
+    void select() {
         //helper metodlar olmadan select
         WebElement element = driver.findElement(By.id("carselect"));
         Select select = new Select(element);
@@ -168,6 +181,10 @@ public class TestMethods {
         assertEquals("Honda",
                 select.getFirstSelectedOption().getText());
     }
+
+
+
+
     @AfterEach
     public void afterEach() {
         if (driver != null) {
