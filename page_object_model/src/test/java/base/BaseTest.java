@@ -52,6 +52,10 @@ public class BaseTest {
         return getWait().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
+    protected WebElement visibleWait(WebElement element) {
+        return getWait().until(ExpectedConditions.visibilityOf(element));
+    }
+
     //wait objesini kullanarak element sayfada gorunmez(non-display) olana kadar bekler
     protected void invisibleWait(By by) {
         getWait().until(ExpectedConditions.invisibilityOfElementLocated(by));
@@ -119,6 +123,10 @@ public class BaseTest {
 
     public String getAlertText() {
         return switchToAlert().getText();
+    }
+
+    public String getElementText(WebElement element) {
+        return visibleWait(element).getText();
     }
 
     protected void sendKeysToAlert(String text) {
