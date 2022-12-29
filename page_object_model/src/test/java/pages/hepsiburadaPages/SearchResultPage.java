@@ -1,5 +1,6 @@
 package pages.hepsiburadaPages;
 
+
 import base.BaseTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,34 +13,23 @@ import pages.practicePages.PracticePage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HomePage extends BaseTest {
+public class SearchResultPage extends BaseTest {
 
     private WebDriver driver;
     private final Logger log = LogManager.getLogger(PracticePage.class);
 
-    public HomePage(WebDriver driver) {
+    public SearchResultPage(WebDriver driver) {
         this.driver = driver;
         var ajax = new AjaxElementLocatorFactory(driver, getWAIT_TIME());
         PageFactory.initElements(ajax, this);
         log.info("HB home page is loaded");
     }
+    @FindBy(css = "div[class*=searchResultSummaryBar]")
+    private WebElement searchResultSummaryBar;
 
-    @FindBy(css = "[class*=searchBoxOld] input")
-    private WebElement searchBox;
-    @FindBy(xpath = "//div[text()='ARA']")
-    private WebElement searchBtn;
-
-    public HomePage typeSearchKeyword(String keyword) {
-        sendKeysToWebElement(searchBox, keyword);
-        log.info("\"{}\" was searched", keyword);
+    public SearchResultPage assertResultBar(String expectetText) {
+        var text = getElementText(searchResultSummaryBar);
+        assertEquals(expectetText, text);
         return this;
     }
-
-    public SearchResultPage clickSearch() {
-        clickElement(searchBtn);
-        log.info("Search clicked");
-        return new SearchResultPage(driver);
-    }
-
-
 }

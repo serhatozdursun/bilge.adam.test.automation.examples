@@ -9,6 +9,7 @@
     <module>Java_and_Junit</module>
     <module>selenium_tutorials</module>
       <module>page_object_model</module>
+      <module>bdd_cucumber</module>
   </modules>
   <packaging>pom</packaging>
 
