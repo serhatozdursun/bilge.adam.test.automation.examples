@@ -1,5 +1,6 @@
 package tests;
 
+import org.junit.jupiter.api.Disabled;
 import pages.practicePages.PracticePage;
 import base.BasePage;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 public class PracticePageTests extends BasePage {
 
     @Test
+    @Disabled
     public void radioButton() {
         new PracticePage(driver)
                 .clickBmwRadio()
@@ -19,6 +21,7 @@ public class PracticePageTests extends BasePage {
     }
 
     @Test
+    @Disabled
     public void selectExample() {
         new PracticePage(driver)
                 .selectBenz()
@@ -26,6 +29,7 @@ public class PracticePageTests extends BasePage {
     }
 
     @Test
+    @Disabled
     public void multipleSelect() {
         new PracticePage(driver)
                 .selectApple()
@@ -39,6 +43,7 @@ public class PracticePageTests extends BasePage {
     }
 
     @Test
+    @Disabled
     public void pageNavigation() {
         new PracticePage(driver)
                 .clickAllCourses()
@@ -49,6 +54,7 @@ public class PracticePageTests extends BasePage {
     }
 
     @Test
+    @Disabled
     public void switchExamples() {
         new PracticePage(driver)
                 .clickNewTab()
