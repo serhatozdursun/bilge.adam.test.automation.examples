@@ -22,7 +22,7 @@ public class PracticePageTests extends BasePage {
     public void selectExample() {
         new PracticePage(driver)
                 .selectBenz()
-                .isBmwSelected();
+                .isBenzSelected();
     }
 
     @Test
@@ -30,7 +30,9 @@ public class PracticePageTests extends BasePage {
 
         new PracticePage(driver)
                 .selectApple()
-                .isAppleSelected();
+                .isAppleSelected()
+                .deselectApple()
+                .isAppleDeselected();
 
     }
 

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PracticePage extends BaseTest {
@@ -95,7 +96,7 @@ public class PracticePage extends BaseTest {
         return this;
     }
 
-    public PracticePage isBmwSelected() {
+    public PracticePage isBenzSelected() {
         assertTrue(benzOption.isSelected());
         log.info("Benz selected");
         return this;
@@ -109,6 +110,18 @@ public class PracticePage extends BaseTest {
 
     public PracticePage isAppleSelected() {
         assertTrue(appleOption.isSelected());
+        log.info("Apple selected");
+        return this;
+    }
+
+    public PracticePage deselectApple(){
+        deselectByText(multipleSelect,"Apple");
+        log.info("deselect Apple");
+        return this;
+    }
+
+    public PracticePage isAppleDeselected(){
+        assertFalse(appleOption.isSelected());
         log.info("Apple selected");
         return this;
     }
