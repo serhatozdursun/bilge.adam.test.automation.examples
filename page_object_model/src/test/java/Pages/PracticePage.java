@@ -43,6 +43,10 @@ public class PracticePage extends BaseTest {
     @FindBy(css = "option[value='apple']")
     private WebElement appleOption;
 
+    @FindBy(css ="option[value='peach']" )
+    private WebElement peachOption;
+    @FindBy(css = "option[value='orange']")
+    private WebElement orangeOption;
     public PracticePage clickBmwRadio() {
         clickElement(bmwRadioBtn);
         log.info("Bmw radio button tiklandi");
@@ -114,15 +118,39 @@ public class PracticePage extends BaseTest {
         return this;
     }
 
-    public PracticePage deselectApple(){
-        deselectByText(multipleSelect,"Apple");
+    public PracticePage deselectApple() {
+        deselectByText(multipleSelect, "Apple");
         log.info("deselect Apple");
         return this;
     }
 
-    public PracticePage isAppleDeselected(){
+    public PracticePage isAppleDeselected() {
         assertFalse(appleOption.isSelected());
         log.info("Apple selected");
+        return this;
+    }
+
+    public PracticePage selectOrange() {
+        selectByText(multipleSelect, "Orange");
+        log.info("Select Orange");
+        return this;
+    }
+
+    public PracticePage isOrangeSelected() {
+        assertTrue(orangeOption.isSelected());
+        log.info("Orange selected");
+        return this;
+    }
+
+    public PracticePage selectPeach() {
+        selectByText(multipleSelect, "Peach");
+        log.info("Select Peach");
+        return this;
+    }
+
+    public PracticePage isPeachSelected() {
+        assertTrue(peachOption.isSelected());
+        log.info("Peach selected");
         return this;
     }
 

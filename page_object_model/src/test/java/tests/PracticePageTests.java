@@ -31,6 +31,10 @@ public class PracticePageTests extends BasePage {
         new PracticePage(driver)
                 .selectApple()
                 .isAppleSelected()
+                .selectOrange()
+                .isOrangeSelected()
+                .selectPeach()
+                .isPeachSelected()
                 .deselectApple()
                 .isAppleDeselected();
 
