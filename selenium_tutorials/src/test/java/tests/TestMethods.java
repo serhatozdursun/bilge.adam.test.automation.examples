@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -47,62 +48,88 @@ public class TestMethods {
     public WebElement clickAbleWait(By by) {
         return getWait().until(ExpectedConditions.elementToBeClickable(by));
     }
+
     //over loading
     public WebElement clickAbleWait(WebElement elm) {
         return getWait().until(ExpectedConditions.elementToBeClickable(elm));
     }
+
     //wait objesini kullanarak element sayfada olusana kadar bekler
     public WebElement presentWait(By by) {
         return getWait().until(ExpectedConditions.presenceOfElementLocated(by));
     }
+
     //wait objesini kullanarak verilen locator a sahip tum elementleri bekler
     public List<WebElement> presentWaitForAll(By by) {
         return getWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
     }
+
     //wait objesini kullanarak element sayfada gorunur olana kadar bekler
     public WebElement visibleWait(By by) {
         return getWait().until(ExpectedConditions.visibilityOfElementLocated(by));
     }
+
     //wait objesini kullanarak element sayfada gorunmez(non-display) olana kadar bekler
     public void invisibleWait(By by) {
         getWait().until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
+
     public Select getSelect(By by) {
         return new Select(clickAbleWait(by));
     }
+
     public void selectByIndex(By by, int index) {
         getSelect(by).selectByIndex(index);
     }
+
     public void selectByValue(By by, String value) {
         getSelect(by).selectByValue(value);
     }
+
     public void selectByText(By by, String text) {
         getSelect(by).selectByVisibleText(text);
     }
+
     public void clickElement(By by) {
         clickAbleWait(by).click();
     }
+
     public void clickElement(WebElement element) {
         clickAbleWait(element).click();
     }
+
     public Alert switchToAlert() {
         return driver.switchTo().alert();
     }
+
     public void confirmTheAlert() {
         switchToAlert().accept();
     }
+
     public void dismissTheAlert() {
         switchToAlert().dismiss();
     }
+
     public String getAlertText() {
         return switchToAlert().getText();
     }
+
     public void sendKeysToAlert(String text) {
         switchToAlert().sendKeys(text);
     }
+
     public void sendKeysToWebElement(By by, String text) {
         clickAbleWait(by).sendKeys(text);
     }
+
+    public Actions getActions() {
+        return new Actions(driver);
+    }
+
+    public void mouseHover(WebElement element) {
+        getActions().moveToElement(element).build().perform();
+    }
+
     @Test
     public void radioButtonExample() {
         clickAbleWait(By.id("bmwradio")).click();
@@ -116,6 +143,7 @@ public class TestMethods {
             assertTrue(radio.isSelected(), "Radio buttonlar secilemedi");
         }
     }
+
     @Test
     public void selectExamples() throws InterruptedException {
         // eger element bir select elementi ise kullanilabilir
@@ -141,6 +169,7 @@ public class TestMethods {
             assertTrue(select.getOptions().get(i).isSelected());
         }
     }
+
     @Test
     public void multipleSelect() throws InterruptedException {
         var select = getSelect(By.id("multiple-select-example"));
@@ -173,6 +202,7 @@ public class TestMethods {
         for (var option : selectElement)
             log.info(option.getText());
     }
+
     @Test
     void select() {
         //helper metodlar olmadan select
@@ -187,6 +217,7 @@ public class TestMethods {
         assertEquals("Honda",
                 select.getFirstSelectedOption().getText());
     }
+
     @Test
     public void checkboxExamples() {
         WebElement bmwcheck = presentWait(By.id("bmwcheck"));
@@ -204,6 +235,7 @@ public class TestMethods {
             assertFalse(checkBox.isSelected());
         }
     }
+
     @Test
     public void switchWindow() throws InterruptedException {
         clickElement(By.id("openwindow"));
@@ -233,6 +265,7 @@ public class TestMethods {
 
 
     }
+
     // Yeni bir pencere acip islem yapmak icin
     @Test
     public void newWindow() {
@@ -246,6 +279,7 @@ public class TestMethods {
         //eski pencrere geri doner
         driver.switchTo().window(defaultWindowHandler);
     }
+
     @Test
     public void newTab() throws InterruptedException {
         var defaultWindowHandler = driver.getWindowHandle();
@@ -258,12 +292,14 @@ public class TestMethods {
         //eski pencrere geri doner
         driver.switchTo().window(defaultWindowHandler);
     }
+
     @Test
     public void switchAlert() throws InterruptedException {
         clickElement(By.id("alertbtn"));
         assertEquals("Hello , share this practice page and share your knowledge", getAlertText());
         confirmTheAlert();
     }
+
     @Test
     public void switchAlertAndDismiss() throws InterruptedException {
         clickElement(By.id("confirmbtn"));
@@ -271,6 +307,7 @@ public class TestMethods {
         assertEquals("Hello , Are you sure you want to confirm?", alert.getText());
         alert.dismiss();
     }
+
     @Test
     public void switchAlertAndConfirm() throws InterruptedException {
         clickElement(By.id("confirmbtn"));
@@ -278,6 +315,7 @@ public class TestMethods {
         assertEquals("Hello , Are you sure you want to confirm?", alert.getText());
         alert.accept();
     }
+
     @Test
     public void table() {
         //xpath le data table yon.
@@ -294,6 +332,7 @@ public class TestMethods {
         var trs = presentWaitForAll(By.cssSelector("#product tr")).get(2);
         log.info(trs.findElements(By.tagName("td")).get(1).getText());
     }
+
     @Test
     public void sendKeys() throws InterruptedException {
         clickAbleWait(By.id("name")).sendKeys("Serhat");
@@ -301,6 +340,7 @@ public class TestMethods {
         assertEquals("Hello Serhat, Are you sure you want to confirm?", getAlertText());
         confirmTheAlert();
     }
+
     @Test
     public void disableEnable() {
         clickElement(By.id("disabled-button"));
@@ -311,6 +351,7 @@ public class TestMethods {
        /* clickElement(By.id("disabled-button"));
         sendKeysToWebElement(By.id("enabled-example-input"),"Test");*/
     }
+
     @Test
     public void hideShow() {
         clickElement(By.id("hide-textbox"));
@@ -323,6 +364,70 @@ public class TestMethods {
     }
     @Test
     void getRowText() {
+        log.info(presentWait(By.xpath("((//tr)[4]/td)[2]")).getText());
+    }
+    @Test
+    public void mouseHoverTest() throws InterruptedException {
+        var mouseHoverMenu = presentWait(By.id("mousehover"));
+        Actions actions = new Actions(driver);
+        assertFalse(presentWait(By.cssSelector("[href='#top']")).isDisplayed());
+        Thread.sleep(1000);
+        actions
+                .moveToElement(mouseHoverMenu)
+                .build()
+                .perform();
+        Thread.sleep(1000);
+        assertTrue(driver.findElements(By.cssSelector("[href='#top']")).size() > 0);
+        assertTrue(presentWait(By.cssSelector("[href='#top']")).isDisplayed());
+
+    }
+    @Test
+    public void mouseHoverTest2() {
+        assertFalse(presentWait(By.cssSelector("[href='#top']")).isDisplayed());
+        var mouseHoverMenu = presentWait(By.id("mousehover"));
+        mouseHover(mouseHoverMenu);
+        assertTrue(driver.findElements(By.cssSelector("[href='#top']")).size() > 0);
+        assertTrue(presentWait(By.cssSelector("[href='#top']")).isDisplayed());
+
+    }
+    @Test
+    public void iFrame() {
+        var iframe = presentWait(By.id("courses-iframe"));
+        driver.switchTo().frame(iframe);
+        selectByValue(By.name("categories"), "1604");
+        invisibleWait(By.xpath("//h4[contains(text(),'Complete Test Automation Bundle')]"));
+
+        var titleH4 = presentWaitForAll(By.tagName("h4"));
+        assertEquals(1, titleH4.size());
+        assertEquals("Selenium WebDriver With Java", titleH4.get(0).getText());
+        driver.switchTo().defaultContent();
+        log.info(presentWait(By.xpath("((//tr)[4]/td)[2]")).getText());
+    }
+    @Test
+    public void iFrameIndex() {
+        var iframe = presentWait(By.id("courses-iframe"));
+        //index ile degistir
+        driver.switchTo().frame(0);
+        selectByValue(By.name("categories"), "1604");
+        invisibleWait(By.xpath("//h4[contains(text(),'Complete Test Automation Bundle')]"));
+
+        var titleH4 = presentWaitForAll(By.tagName("h4"));
+        assertEquals(1, titleH4.size());
+        assertEquals("Selenium WebDriver With Java", titleH4.get(0).getText());
+        driver.switchTo().defaultContent();
+        log.info(presentWait(By.xpath("((//tr)[4]/td)[2]")).getText());
+    }
+    @Test
+    public void iFrameNameOrID() {
+        //index ile degistir
+        driver.switchTo().frame("courses-iframe");
+        selectByValue(By.name("categories"), "1604");
+        invisibleWait(By.xpath("//h4[contains(text(),'Complete Test Automation Bundle')]"));
+
+        var titleH4 = presentWaitForAll(By.tagName("h4"));
+        assertEquals(1, titleH4.size());
+        assertEquals("Selenium WebDriver With Java", titleH4.get(0).getText());
+        driver.switchTo().defaultContent();
         log.info(presentWait(By.xpath("((//tr)[4]/td)[2]")).getText());
     }
     @AfterEach
