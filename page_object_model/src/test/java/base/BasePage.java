@@ -58,8 +58,12 @@ public class BasePage {
 
     @AfterAll
     public static void tearDown() {
-        service.stop();
-        log.info("Service stop");
+        try {
+            service.stop();
+            log.info("Service stop");
+        }catch (Exception exception){
+            log.warn("Service cannot stop an error occurred");
+        }
     }
 
 }
