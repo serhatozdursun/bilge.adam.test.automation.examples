@@ -3,7 +3,6 @@ package Pages;
 import base.BaseTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,6 +37,10 @@ public class PracticePage extends BaseTest {
     private WebElement carSelect;
     @FindBy(css = "option[value='benz']")
     private WebElement benzOption;
+    @FindBy(id = "multiple-select-example")
+    private WebElement multipleSelect;
+    @FindBy(css = "option[value='apple']")
+    private WebElement appleOption;
 
     public PracticePage clickBmwRadio() {
         clickElement(bmwRadioBtn);
@@ -95,6 +98,18 @@ public class PracticePage extends BaseTest {
     public PracticePage isBmwSelected() {
         assertTrue(benzOption.isSelected());
         log.info("Benz selected");
+        return this;
+    }
+
+    public PracticePage selectApple() {
+        selectByText(multipleSelect, "Apple");
+        log.info("Select Apple");
+        return this;
+    }
+
+    public PracticePage isAppleSelected() {
+        assertTrue(appleOption.isSelected());
+        log.info("Apple selected");
         return this;
     }
 

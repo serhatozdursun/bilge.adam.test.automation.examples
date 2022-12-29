@@ -15,8 +15,23 @@ public class PracticePageTests extends BasePage {
                 .assertHondaButtonIsSelected()
                 .clickBenzRadio()
                 .assertBenzButtonIsSelected()
-                .checkAllRadioButton()
+                .checkAllRadioButton();
+    }
+
+    @Test
+    public void selectExample() {
+        new PracticePage(driver)
                 .selectBenz()
                 .isBmwSelected();
     }
+
+    @Test
+    public void multipleSelect() {
+
+        new PracticePage(driver)
+                .selectApple()
+                .isAppleSelected();
+
+    }
+
 }

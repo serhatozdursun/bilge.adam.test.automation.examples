@@ -81,6 +81,10 @@ public class BaseTest {
         getSelect(by).selectByVisibleText(text);
     }
 
+    protected void selectByText(WebElement element, String text) {
+        getSelect(element).selectByVisibleText(text);
+    }
+
     protected void clickElement(By by) {
         clickAbleWait(by).click();
     }
