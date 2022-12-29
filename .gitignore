@@ -2,3 +2,6 @@
 /target/
 .idea
 Java_and_Junit/target
+Java_and_Junit/logs
+selenium_tutorials/logs
+page_object_model/logs

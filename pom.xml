@@ -8,6 +8,7 @@
   <modules>
     <module>Java_and_Junit</module>
     <module>selenium_tutorials</module>
+      <module>page_object_model</module>
   </modules>
   <packaging>pom</packaging>
 
