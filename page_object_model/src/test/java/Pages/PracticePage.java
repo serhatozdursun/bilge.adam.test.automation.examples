@@ -11,13 +11,14 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PracticePage extends BaseTest {
     private WebDriver driver;
 
     private final Logger log = LogManager.getLogger(PracticePage.class);
+
+    private static String currentWindow = null;
 
     public PracticePage(WebDriver driver) {
         this.driver = driver;
@@ -42,11 +43,15 @@ public class PracticePage extends BaseTest {
     private WebElement multipleSelect;
     @FindBy(css = "option[value='apple']")
     private WebElement appleOption;
-
-    @FindBy(css ="option[value='peach']" )
+    @FindBy(css = "option[value='peach']")
     private WebElement peachOption;
     @FindBy(css = "option[value='orange']")
     private WebElement orangeOption;
+    @FindBy(css = "[href='/courses']")
+    private WebElement courses;
+    @FindBy(id = "opentab")
+    private WebElement opentab;
+
     public PracticePage clickBmwRadio() {
         clickElement(bmwRadioBtn);
         log.info("Bmw radio button tiklandi");
@@ -126,7 +131,7 @@ public class PracticePage extends BaseTest {
 
     public PracticePage isAppleDeselected() {
         assertFalse(appleOption.isSelected());
-        log.info("Apple selected");
+        log.info("Apple deselected");
         return this;
     }
 
@@ -154,8 +159,23 @@ public class PracticePage extends BaseTest {
         return this;
     }
 
-    public SupportPage clickSupport() {
+    public CoursesPage clickAllCourses() {
+        clickElement(courses);
+        return new CoursesPage(driver);
+    }
 
-        return new SupportPage(driver);
+    public CoursesPage clickNewTab() {
+        currentWindow = driver.getWindowHandle();
+        clickElement(opentab);
+
+        for (var handler : driver.getWindowHandles()) {
+            driver.switchTo().window(handler);
+        }
+
+        return new CoursesPage(driver);
+    }
+
+    public static String getCurrentWindow() {
+        return currentWindow;
     }
 }

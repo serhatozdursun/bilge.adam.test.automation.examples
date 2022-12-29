@@ -57,6 +57,10 @@ public class BaseTest {
         getWait().until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
+    protected void invisibleWait(WebElement element) {
+        getWait().until(ExpectedConditions.invisibilityOf(element));
+    }
+
     protected Select getSelect(By by) {
         return new Select(clickAbleWait(by));
     }

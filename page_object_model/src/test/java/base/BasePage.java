@@ -7,12 +7,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
+import java.time.Duration;
 
 public class BasePage {
     private static final Logger log = LogManager.getLogger(BasePage.class);
@@ -26,7 +26,7 @@ public class BasePage {
                 .build();
         try {
             service.start();
-            log.info("service start");
+            log.info("Service start");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -37,6 +37,8 @@ public class BasePage {
         var option = new ChromeOptions();
         option.addArguments("--start-fullscreen");
         driver = new RemoteWebDriver(service.getUrl(), option);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(15));
         log.info("Browser started");
         driver.get("https://courses.letskodeit.com/practice");
     }
@@ -57,7 +59,7 @@ public class BasePage {
     @AfterAll
     public static void tearDown() {
         service.stop();
-        log.info("service stop");
+        log.info("Service stop");
     }
 
 }
