@@ -129,6 +129,10 @@ public class BaseTest {
         clickAbleWait(by).sendKeys(text);
     }
 
+    protected void sendKeysToWebElement(WebElement element, String text) {
+        clickAbleWait(element).sendKeys(text);
+    }
+
     protected Actions getActions() {
         return new Actions(driver);
     }
