@@ -1,4 +1,4 @@
-package Pages;
+package pages.practicePages;
 
 import base.BaseTest;
 import org.apache.logging.log4j.LogManager;

@@ -40,7 +40,7 @@ public class BasePage {
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(15));
         log.info("Browser started");
-        driver.get("https://courses.letskodeit.com/practice");
+        driver.get("https://www.hepsiburada.com/");
     }
 
     @AfterEach

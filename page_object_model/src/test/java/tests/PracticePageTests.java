@@ -1,6 +1,6 @@
 package tests;
 
-import Pages.PracticePage;
+import pages.practicePages.PracticePage;
 import base.BasePage;
 import org.junit.jupiter.api.Test;
 

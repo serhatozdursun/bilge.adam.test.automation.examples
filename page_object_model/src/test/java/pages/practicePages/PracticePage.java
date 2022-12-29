@@ -1,4 +1,4 @@
-package Pages;
+package pages.practicePages;
 
 import base.BaseTest;
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +22,7 @@ public class PracticePage extends BaseTest {
 
     public PracticePage(WebDriver driver) {
         this.driver = driver;
+        driver.get("https://courses.letskodeit.com/practice");
         var ajax = new AjaxElementLocatorFactory(driver, getWAIT_TIME());
         PageFactory.initElements(ajax, this);
         log.info("PracticePage is loaded");
