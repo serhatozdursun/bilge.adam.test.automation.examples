@@ -3,6 +3,7 @@ package pages.hepsiburadaPages;
 import base.BaseTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class HomePage extends BaseTest {
 
     private WebDriver driver;
-    private final Logger log = LogManager.getLogger(PracticePage.class);
+    private final Logger log = LogManager.getLogger(BaseTest.class);
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -28,6 +29,10 @@ public class HomePage extends BaseTest {
     private WebElement searchBox;
     @FindBy(xpath = "//div[text()='ARA']")
     private WebElement searchBtn;
+    @FindBy(id = "myAccount")
+    private WebElement myAccount;
+    @FindBy(id = "login")
+    private WebElement login;
 
     public HomePage typeSearchKeyword(String keyword) {
         sendKeysToWebElement(searchBox, keyword);
@@ -39,6 +44,16 @@ public class HomePage extends BaseTest {
         clickElement(searchBtn);
         log.info("Search clicked");
         return new SearchResultPage(driver);
+    }
+
+    public HomePage moveToAccount() {
+        mouseHover(myAccount);
+        return this;
+    }
+
+    public LoginPage clickLogin() {
+        clickElement(login);
+        return new LoginPage(driver);
     }
 
 

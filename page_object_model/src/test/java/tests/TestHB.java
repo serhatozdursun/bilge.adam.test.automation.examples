@@ -7,10 +7,23 @@ import pages.hepsiburadaPages.HomePage;
 public class TestHB extends BasePage {
 
     @Test
-    public void searchKeyword(){
+    public void searchKeyword() throws InterruptedException {
         new HomePage(driver)
                 .typeSearchKeyword("Tablet")
                 .clickSearch()
-                .assertResultBar("Tablet ile ilgili 10000+ ürün bulduk");
+                .assertResultBar("Tablet")
+                .clickSortingBox()
+                .clickSortToHigherPrice()
+                .moveToProduct(0)
+                .clickOnTheProduct(0);
+    }
+
+    @Test
+    public void goLoginPage() {
+        new HomePage(driver)
+                .moveToAccount()
+                .clickLogin()
+                .typeUserName()
+                .pressEnterOnLogin();
     }
 }

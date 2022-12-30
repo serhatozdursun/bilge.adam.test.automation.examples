@@ -1,9 +1,6 @@
 package base;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -106,7 +103,19 @@ public class BaseTest {
     }
 
     protected void clickElement(WebElement element) {
+        scrollIntoViewIfNeed(element);
         clickAbleWait(element).click();
+    }
+
+    private JavascriptExecutor js() {
+        return (JavascriptExecutor) driver;
+    }
+
+    protected void scrollIntoViewIfNeed(WebElement element){
+        js().executeScript("arguments[0].scrollIntoViewIfNeeded()",element);
+    }
+    protected void clickWithJS(WebElement element) {
+        js().executeScript("arguments[0].click()", element);
     }
 
     protected Alert switchToAlert() {
@@ -133,8 +142,12 @@ public class BaseTest {
         switchToAlert().sendKeys(text);
     }
 
-    protected void sendKeysToWebElement(By by, String text) {
-        clickAbleWait(by).sendKeys(text);
+    protected void sendKeysToWebElement(By by, CharSequence keysToSend) {
+        clickAbleWait(by).sendKeys(keysToSend);
+    }
+
+    protected void sendEnterToWebElement(WebElement element) {
+        clickAbleWait(element).sendKeys(Keys.ENTER);
     }
 
     protected void sendKeysToWebElement(WebElement element, String text) {
