@@ -5,17 +5,20 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.HomePage;
+import pages.ProductPage;
 import pages.SearchResultPage;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static base.BasePage.getDriver;
 
-public class AddToCardStep  {
-    private HomePage homePage= new HomePage(getDriver());
-    private SearchResultPage searchResultPage= new SearchResultPage(getDriver());
+public class AddToCardStep {
+    private HomePage homePage = new HomePage(getDriver());
+    private SearchResultPage searchResultPage = new SearchResultPage(getDriver());
+    private ProductPage productPage = new ProductPage(getDriver());
+
     @Given("On HB home page")
     public void onHBHomePage() {
-       homePage.assertLoaded();
+        homePage.assertLoaded();
     }
 
     @When("I search {string}")
