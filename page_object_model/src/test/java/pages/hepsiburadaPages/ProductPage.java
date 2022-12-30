@@ -11,7 +11,6 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ProductPage extends BaseTest {
@@ -67,7 +66,7 @@ public class ProductPage extends BaseTest {
         return this;
     }
 
-    public SearchResultPage clickReturnShopping(){
+    public SearchResultPage clickReturnShopping() {
         clickElement(returnShopping);
         log.info("Clicked on returnShopping");
         invisibleWait(goToCartBtn);
