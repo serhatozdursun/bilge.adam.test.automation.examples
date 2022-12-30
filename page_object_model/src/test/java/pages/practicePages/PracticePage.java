@@ -168,11 +168,7 @@ public class PracticePage extends BaseTest {
     public CoursesPage clickNewTab() {
         currentWindow = driver.getWindowHandle();
         clickElement(opentab);
-
-        for (var handler : driver.getWindowHandles()) {
-            driver.switchTo().window(handler);
-        }
-
+        switchToNewTab();
         return new CoursesPage(driver);
     }
 

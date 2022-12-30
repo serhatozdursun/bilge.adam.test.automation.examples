@@ -15,7 +15,8 @@ public class TestHB extends BasePage {
                 .clickSortingBox()
                 .clickSortToHigherPrice()
                 .moveToProduct(0)
-                .clickOnTheProduct(0);
+                .clickOnTheProduct(0)
+                .clickAddToCard();
     }
 
     @Test

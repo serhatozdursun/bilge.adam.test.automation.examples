@@ -67,12 +67,12 @@ public class SearchResultPage extends BaseTest {
         return this;
     }
 
-    public SearchResultPage clickOnTheProduct(int index) {
+    public ProductPage clickOnTheProduct(int index) {
         clickElement(productList.get(index));
         log.info("Clicked on addToCartBtn");
         currentWindow = driver.getWindowHandle();
-        //todo switch new tab
-        return this;
+        switchToNewTab();
+        return new ProductPage(driver);
     }
 
     public static String getCurrentWindow() {
