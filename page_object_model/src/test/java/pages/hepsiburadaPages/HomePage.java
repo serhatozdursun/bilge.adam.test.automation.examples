@@ -9,14 +9,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
-import pages.practicePages.PracticePage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HomePage extends BaseTest {
 
     private WebDriver driver;
-    private final Logger log = LogManager.getLogger(BaseTest.class);
+    private final Logger log = LogManager.getLogger(HomePage.class);
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
