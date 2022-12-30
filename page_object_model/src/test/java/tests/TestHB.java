@@ -22,7 +22,9 @@ public class TestHB extends BasePage {
                 .assertGotToCardBtn()
                 .assertSlickSlideIsPresent()
                 .clickReturnShopping()
-                .assertURL();
+                .assertURL()
+                .assertTitle()
+                .assertH1();
     }
 
     @Test
