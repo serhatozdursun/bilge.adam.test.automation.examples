@@ -2,16 +2,20 @@ package tests;
 
 import base.BasePage;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import pages.hepsiburadaPages.HomePage;
 
 public class TestHB extends BasePage {
 
-    @Test
-    public void searchKeyword() throws InterruptedException {
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Tablet", "Samsung"})
+    public void searchKeyword(String product) throws InterruptedException {
         new HomePage(driver)
-                .typeSearchKeyword("Tablet")
+                .typeSearchKeyword(product)
                 .clickSearch()
-                .assertResultBar("Tablet")
+                .assertResultBar(product)
                 .clickSortingBox()
                 .clickSortToHigherPrice()
                 .moveToProduct(0)

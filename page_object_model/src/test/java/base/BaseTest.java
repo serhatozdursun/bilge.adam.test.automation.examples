@@ -111,9 +111,10 @@ public class BaseTest {
         return (JavascriptExecutor) driver;
     }
 
-    protected void scrollIntoViewIfNeed(WebElement element){
-        js().executeScript("arguments[0].scrollIntoViewIfNeeded()",element);
+    protected void scrollIntoViewIfNeed(WebElement element) {
+        js().executeScript("arguments[0].scrollIntoViewIfNeeded()", element);
     }
+
     protected void clickWithJS(WebElement element) {
         js().executeScript("arguments[0].click()", element);
     }
@@ -166,9 +167,15 @@ public class BaseTest {
         return WAIT_TIME;
     }
 
-    protected void switchToNewTab(){
+    protected void switchToNewTab() {
         for (var handler : driver.getWindowHandles()) {
             driver.switchTo().window(handler);
         }
+    }
+    protected void openNewTab() {
+        driver.switchTo().newWindow(WindowType.TAB);
+    }
+    protected void openNewWindow() {
+        driver.switchTo().newWindow(WindowType.WINDOW);
     }
 }

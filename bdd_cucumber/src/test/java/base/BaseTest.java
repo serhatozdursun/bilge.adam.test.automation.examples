@@ -171,4 +171,11 @@ public class BaseTest {
             driver.switchTo().window(handler);
         }
     }
+
+    protected void openNewTab() {
+        driver.switchTo().newWindow(WindowType.TAB);
+    }
+    protected void openNewWindow() {
+        driver.switchTo().newWindow(WindowType.WINDOW);
+    }
 }

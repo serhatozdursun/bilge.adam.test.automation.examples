@@ -1,5 +1,6 @@
 package stepDef;
 
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -8,7 +9,6 @@ import pages.HomePage;
 import pages.ProductPage;
 import pages.SearchResultPage;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static base.BasePage.getDriver;
 
 public class AddToCardStep {
@@ -33,11 +33,15 @@ public class AddToCardStep {
     }
 
     @When("Sort from lowest to highest price")
-    public void sortFromLowestToHighestPrice() {
-
+    public void sortFromLowestToHighestPrice() throws InterruptedException {
+        searchResultPage.clickSortingBox()
+                .clickSortToHigherPrice();
     }
 
     @And("Click {int} product")
     public void clickProduct(int index) {
+        searchResultPage.moveToProduct(index)
+                .clickOnTheProduct(index);
     }
+
 }

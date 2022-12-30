@@ -1,11 +1,10 @@
 package base;
 
-import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeAll;
+import io.cucumber.java.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -44,7 +43,16 @@ public class BasePage {
     }
 
     @After
-    public void afterEach() {
+    public void afterEach(Scenario scenario) {
+
+        if (scenario.isFailed()) {
+            //ekran goruntusu alir
+            var takeScreenShot = (TakesScreenshot) driver;
+            var ss = takeScreenShot.getScreenshotAs(OutputType.BYTES);
+            //rapora ekler
+            scenario.attach(ss, "image/png", "Error Screenshot");
+        }
+
         if (driver != null) {
             driver.close();
             driver.quit();
@@ -61,7 +69,7 @@ public class BasePage {
         try {
             service.stop();
             log.info("Service stop");
-        }catch (Exception exception){
+        } catch (Exception exception) {
             log.warn("Service cannot stop an error occurred");
         }
     }
