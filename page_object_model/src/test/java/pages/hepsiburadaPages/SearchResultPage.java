@@ -13,6 +13,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SearchResultPage extends BaseTest {
@@ -77,5 +78,12 @@ public class SearchResultPage extends BaseTest {
 
     public static String getCurrentWindow() {
         return currentWindow;
+    }
+
+    public SearchResultPage assertURL(){
+        var url = driver.getCurrentUrl();
+        assertEquals(url,"https://www.hepsiburada.com/tablet-c-3008012");
+        log.info("url is valid");
+        return this;
     }
 }

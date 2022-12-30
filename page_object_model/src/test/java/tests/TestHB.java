@@ -16,7 +16,13 @@ public class TestHB extends BasePage {
                 .clickSortToHigherPrice()
                 .moveToProduct(0)
                 .clickOnTheProduct(0)
-                .clickAddToCard();
+                .clickAddToCard()
+                .waitInvisibleOfModal()
+                .assertReturnShopping()
+                .assertGotToCardBtn()
+                .assertSlickSlideIsPresent()
+                .clickReturnShopping()
+                .assertURL();
     }
 
     @Test
