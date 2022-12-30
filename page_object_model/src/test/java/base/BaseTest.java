@@ -165,4 +165,10 @@ public class BaseTest {
     protected static int getWAIT_TIME() {
         return WAIT_TIME;
     }
+
+    protected void switchToNewTab(){
+        for (var handler : driver.getWindowHandles()) {
+            driver.switchTo().window(handler);
+        }
+    }
 }
